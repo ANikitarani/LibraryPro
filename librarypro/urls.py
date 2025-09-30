@@ -16,14 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
-
-def home(request):
-    return redirect('catalog')
+from accounts import views as accounts_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),   # Homepage
-    path('books/', include('books.urls')),        # Books app
+    path('', accounts_views.home, name='home'),   # Homepage
+    path('accounts/', include('accounts.urls')),  # Auth routes
+    path('reservations/', include('reservations.urls')),  # Reservations app
 ]
 

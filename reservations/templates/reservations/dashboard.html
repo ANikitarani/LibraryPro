@@ -1,0 +1,47 @@
+{% extends 'reservations/base.html' %}
+{% block title %}Dashboard - LibraryPro{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h2>Welcome, {{ user.username }} 👋</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">📚 Total Books</h5>
+                    <h3>{{ total_books|default:"0" }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">📝 My Reservations</h5>
+                    <h3>{{ user_reservations_count }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">⚠️ Overdue</h5>
+                    <h3>{{ overdue_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📝 My Reservations</h5>
+                    <p class="card-text">View, renew, or return your reserved books.</p>
+                    <a href="{% url 'my_reservations' %}" class="btn btn-primary">Manage Reservations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

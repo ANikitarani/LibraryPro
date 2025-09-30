@@ -1,0 +1,42 @@
+{% extends 'reservations/base.html' %}
+{% block title %}Reserve Book - LibraryPro{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h2>Reserve Book 📖</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+            {% if book.isbn %}
+                <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+            {% endif %}
+            {% if book.description %}
+                <p class="card-text"><strong>Description:</strong> {{ book.description }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h4>Please provide your contact information for notifications:</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.contact_name.id_for_label }}" class="form-label">{{ form.contact_name.label }}</label>
+                {{ form.contact_name }}
+                {% if form.contact_name.errors %}
+                    <div class="text-danger">{{ form.contact_name.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.contact_email.id_for_label }}" class="form-label">{{ form.contact_email.label }}</label>
+                {{ form.contact_email }}
+                {% if form.contact_email.errors %}
+                    <div class="text-danger">{{ form.contact_email.errors }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-success">Confirm Reservation</button>
+            <a href="{% url 'catalog' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
