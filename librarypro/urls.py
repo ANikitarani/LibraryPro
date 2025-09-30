@@ -22,6 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', accounts_views.home, name='home'),   # Homepage
     path('accounts/', include('accounts.urls')),  # Auth routes
-    path('reservations/', include('reservations.urls')),  # Reservations app
+    path('books/', include('books.urls')),        # Books app
 ]
 

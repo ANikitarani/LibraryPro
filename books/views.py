@@ -21,6 +21,7 @@ def dashboard(request):
         'overdue_count': overdue_reservations.count(),
     })
 
+@login_required
 def catalog(request):
     query = request.GET.get('q')
     books = Book.objects.all()

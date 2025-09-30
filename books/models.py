@@ -23,14 +23,12 @@ class Book(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.author}"
-
 class Reservation(models.Model):
     STATUS_CHOICES = [
         ('active', 'Active'),
         ('overdue', 'Overdue'),
         ('returned', 'Returned'),
     ]
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     reserved_at = models.DateTimeField(auto_now_add=True)
@@ -38,9 +36,8 @@ class Reservation(models.Model):
     returned = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
     notified = models.BooleanField(default=False)
-    contact_name = models.CharField(max_length=100, blank=True, null=True)
     contact_email = models.EmailField(blank=True, null=True)
+    contact_name = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.book.title}"
-
+        return f"{self.user.username} reserved {self.book.title}"
