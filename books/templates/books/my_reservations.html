@@ -1,0 +1,49 @@
+{% extends 'books/base.html' %}
+{% block title %}My Reservations - LibraryPro{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h2>My Reservations 📖</h2>
+    
+    {% if reservations %}
+        <div class="row">
+            {% for r in reservations %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ r.book.title }}</h5>
+                            <p class="card-text"><strong>Author:</strong> {{ r.book.author }}</p>
+                            <p class="card-text"><strong>Reserved At:</strong> {{ r.reserved_at|date:"M d, Y" }}</p>
+                            <p class="card-text"><strong>Due Date:</strong> 
+                                <span class="{% if r.due_date < today %}text-danger{% else %}text-success{% endif %}">
+                                    {{ r.due_date|date:"M d, Y" }}
+                                </span>
+                                {% if r.due_date < today %}
+                                    <span class="badge bg-danger">Overdue</span>
+                                {% endif %}
+                            </p>
+                            <p class="card-text"><strong>Status:</strong> 
+                                <span class="badge {% if r.status == 'active' %}bg-success{% elif r.status == 'overdue' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                    {{ r.get_status_display }}
+                                </span>
+                            </p>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'renew_reservation' r.id %}" class="btn btn-warning btn-sm">Renew (+7 days)</a>
+                                <a href="{% url 'return_book' r.id %}" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to return this book?')">Return Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <h4>No active reservations.</h4>
+            <p>You haven't reserved any books yet. <a href="{% url 'catalog' %}">Browse the catalog</a> to find books to reserve.</p>
+        </div>
+    {% endif %}
+    
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

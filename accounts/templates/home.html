@@ -1,0 +1,12 @@
+{% extends 'books/base.html' %}
+{% load static %}
+{% block title %}LibraryPro - Home{% endblock %}
+{% block content %}
+<h1>Welcome to LibraryPro 📚</h1>
+<p>Your digital library experience starts here.</p>
+{% if user.is_authenticated %}
+    <p>Go to your <a href="{% url 'dashboard' %}">Dashboard</a> to manage your books.</p>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">Login</a> or <a href="{% url 'signup' %}">Sign Up</a> to get started.</p>
+{% endif %}
+{% endblock %}

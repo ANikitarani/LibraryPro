@@ -1,0 +1,77 @@
+{% extends 'books/base.html' %}
+{% block title %}Dashboard - LibraryPro{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h2>Welcome, {{ user.username }} 👋</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">📚 Total Books</h5>
+                    <h3>{{ total_books|default:"0" }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">📝 My Reservations</h5>
+                    <h3>{{ user_reservations_count }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">⚠️ Overdue</h5>
+                    <h3>{{ overdue_count }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">🔍 Search Books</h5>
+                    <form method="get" action="{% url 'catalog' %}">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                            <button class="btn btn-light" type="submit">Go</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📚 Browse Catalog</h5>
+                    <p class="card-text">Search and view available books.</p>
+                    <a href="{% url 'catalog' %}" class="btn btn-primary">Go to Catalog</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📝 My Reservations</h5>
+                    <p class="card-text">View, renew, or return your reserved books.</p>
+                    <a href="{% url 'my_reservations' %}" class="btn btn-primary">Manage Reservations</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Analytics</h5>
+                    <p class="card-text">View library usage statistics and reports.</p>
+                    <a href="{% url 'analytics' %}" class="btn btn-primary">View Analytics</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

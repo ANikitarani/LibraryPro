@@ -1,0 +1,56 @@
+{% extends 'books/base.html' %}
+{% block title %}Catalog - LibraryPro{% endblock %}
+{% block content %}
+<div class="py-4">
+    <h2>Library Catalog 📚</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" class="d-flex">
+                <input type="text" name="q" class="form-control me-2" placeholder="Search by title, author, or category..." value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    {% if books %}
+        <div class="row">
+            {% for book in books %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+                            <p class="card-text"><strong>Category:</strong> {{ book.category.name|default:"Uncategorized" }}</p>
+                            {% if book.isbn %}
+                                <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+                            {% endif %}
+                            {% if book.description %}
+                                <p class="card-text"><strong>Description:</strong> {{ book.description|truncatewords:20 }}</p>
+                            {% endif %}
+                            <p class="card-text"><strong>Available Copies:</strong> 
+                                <span class="badge {% if book.available_copies > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ book.available_copies }}
+                                </span>
+                            </p>
+                            {% if book.available_copies > 0 %}
+                                <a href="{% url 'reserve_book' book.id %}" class="btn btn-success">Reserve Book</a>
+                            {% else %}
+                                <button class="btn btn-secondary" disabled>No Copies Available</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <h4>No books found.</h4>
+            <p>Try adjusting your search terms or <a href="{% url 'catalog' %}">view all books</a>.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
